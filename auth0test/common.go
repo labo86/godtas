@@ -1,0 +1,11 @@
+package auth0test
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func SetToken(r *http.Request) {
+	token := `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNlcnRfa2V5In0.eyJzdWIiOiJ0ZXN0fDEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.NjeVg_iu6tI7ku2dfjzd1rg-taTrb2yZBjPwvZYspIKFdoA5EW63b30M2eYj9ydg1XOTh_ZstKThWK84XcjTihcw8hCecMVFmgjpH3gjBic3QHaS1u1TPKhNaT78Jf_qxMahriOFikxsojAYjuMR9-dMccYRMb_cMMZfa54Mu3kcQRwW842m3jBK0gLawoxo0FYUoXdYShjJOnlUTjdIIFCE-mqayxC4QMBwlBUmZfxjIDoPSYNfzKW5rANFFXn4wwKlWDkzDhrokKutWpw5ZkrHdsuxGRYFMdrv4AFNcNODLBmRRuDVSsdJqdYHQLT1k5x3h8-T3w8djulH1XZD_Q`
+	r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+}
