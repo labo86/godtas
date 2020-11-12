@@ -3,6 +3,7 @@ package auth0
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 type Local struct {
@@ -10,6 +11,14 @@ type Local struct {
 }
 
 func (d *Local) Init() error {
+	if d.config.Kid == "" {
+		return fmt.Errorf("auth0.Local.Init() : Kid is empty")
+	}
+
+	if d.config.X5c == "" {
+		return fmt.Errorf("auth0.Local.Init() : X5c is empty")
+	}
+
 	jwks := JWKS{
 		Keys: []JWK{
 			{

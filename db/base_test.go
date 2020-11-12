@@ -81,20 +81,20 @@ func Test_MySql(t *testing.T) {
 
 	db, err := config.Init()
 	if err != nil {
-		t.Errorf("no deberia fallar: %v", err)
+		t.Errorf("%+v.Init() got %v", config, err)
 	}
 
 	if err := db.Init(); err != nil {
-		t.Errorf("no deberia fallar: %v", err)
+		t.Errorf("%+v.Init() got %v", db, err)
 	}
 
 	var value int
-	if err != db.Conn().QueryRow(`SELECT 123 as a`).Scan(&value) {
-		t.Errorf("no deberia fallar: %v", err)
+	if query := `SELECT 123 as a`; err != db.Conn().QueryRow(query).Scan(&value) {
+		t.Errorf("%+v: query : %q  got %v", db, query, err)
 	}
 
-	if value != 123 {
-		t.Errorf("el valor deberia ser 123: %q", value)
+	if want := 123; value != want {
+		t.Errorf("got %d, want %d", value, want)
 	}
 
 	if err := db.Close(); err != nil {

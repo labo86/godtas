@@ -6,21 +6,13 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef9cbcef-61d2-42ba-8694-6509f76a0745" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/base_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/base_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +45,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/dir" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -62,10 +54,14 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/auth0/files" />
+      <recent name="$PROJECT_DIR$/auth0" />
       <recent name="$PROJECT_DIR$" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/dir" />
+      <recent name="$PROJECT_DIR$/db" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -79,6 +75,17 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <pattern value="^\QTestService_ServiceInit\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_ParseJsonKeys in github.com/labo86/godtas/auth0" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="godtas" />
+      <working_directory value="$PROJECT_DIR$/auth0" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/labo86/godtas/auth0" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTest_ParseJsonKeys\E$" />
       <method v="2" />
     </configuration>
     <configuration name="go test godtas" type="GoTestRunConfiguration" factoryName="Go Test" nameIsGenerated="true">
@@ -95,9 +102,11 @@
     <list>
       <item itemvalue="Go Test.go test godtas" />
       <item itemvalue="Go Test.TestService_ServiceInit in github.com/labo86/godtas" />
+      <item itemvalue="Go Test.Test_ParseJsonKeys in github.com/labo86/godtas/auth0" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.Test_ParseJsonKeys in github.com/labo86/godtas/auth0" />
         <item itemvalue="Go Test.TestService_ServiceInit in github.com/labo86/godtas" />
       </list>
     </recent_temporary>
@@ -121,7 +130,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Encode as Json" />
     <MESSAGE value="ParamHelper no ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="ParamHelper no ok" />
+    <MESSAGE value="Database configuration" />
+    <MESSAGE value="Big refactor!!! Building blocks approach" />
+    <option name="LAST_COMMIT_MESSAGE" value="Big refactor!!! Building blocks approach" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -135,54 +146,58 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="418" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1604910934888" />
+    <state x="681" y="327" width="552" height="395" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605024829360">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="681" y="327" width="552" height="395" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1048@0.0.1920.1048" timestamp="1605024829360" />
     <state width="748" height="485" key="DebuggerActiveHint" timestamp="1604920552345">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="748" height="485" key="DebuggerActiveHint/0.0.1920.1048@0.0.1920.1048" timestamp="1604920552345" />
-    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl" timestamp="1604928695387">
+    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl" timestamp="1605004302467">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1604928695387" />
-    <state width="939" height="104" key="GridCell.Tab.0.bottom" timestamp="1604971784974">
+    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1605004302467" />
+    <state width="1878" height="343" key="GridCell.Tab.0.bottom" timestamp="1605050977525">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="104" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1604971784974" />
-    <state width="939" height="104" key="GridCell.Tab.0.center" timestamp="1604971784973">
+    <state width="1878" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977525" />
+    <state width="1878" height="343" key="GridCell.Tab.0.center" timestamp="1605050977524">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="104" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1604971784973" />
-    <state width="939" height="104" key="GridCell.Tab.0.left" timestamp="1604971784973">
+    <state width="1878" height="343" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
+    <state width="1878" height="343" key="GridCell.Tab.0.left" timestamp="1605050977524">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="104" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1604971784973" />
-    <state width="939" height="104" key="GridCell.Tab.0.right" timestamp="1604971784974">
+    <state width="1878" height="343" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
+    <state width="1878" height="343" key="GridCell.Tab.0.right" timestamp="1605050977524">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="104" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1604971784974" />
-    <state width="1878" height="343" key="GridCell.Tab.1.bottom" timestamp="1604920718992">
+    <state width="1878" height="343" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
+    <state width="1878" height="343" key="GridCell.Tab.1.bottom" timestamp="1605050977526">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.1.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1604920718992" />
-    <state width="1878" height="343" key="GridCell.Tab.1.center" timestamp="1604920718991">
+    <state width="1878" height="343" key="GridCell.Tab.1.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977526" />
+    <state width="1878" height="343" key="GridCell.Tab.1.center" timestamp="1605050977525">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.1.center/0.0.1920.1048@0.0.1920.1048" timestamp="1604920718991" />
-    <state width="1878" height="343" key="GridCell.Tab.1.left" timestamp="1604920718990">
+    <state width="1878" height="343" key="GridCell.Tab.1.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977525" />
+    <state width="1878" height="343" key="GridCell.Tab.1.left" timestamp="1605050977525">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.1.left/0.0.1920.1048@0.0.1920.1048" timestamp="1604920718990" />
-    <state width="1878" height="343" key="GridCell.Tab.1.right" timestamp="1604920718991">
+    <state width="1878" height="343" key="GridCell.Tab.1.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977525" />
+    <state width="1878" height="343" key="GridCell.Tab.1.right" timestamp="1605050977526">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.1.right/0.0.1920.1048@0.0.1920.1048" timestamp="1604920718991" />
+    <state width="1878" height="343" key="GridCell.Tab.1.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977526" />
     <state x="689" y="259" width="540" height="524" key="StructurePopup" timestamp="1604909547024">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="689" y="259" width="540" height="524" key="StructurePopup/0.0.1920.1048@0.0.1920.1048" timestamp="1604909547024" />
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1604939118545">
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605034599054">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1604939118545" />
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1605034599054" />
     <state x="796" y="285" width="321" height="479" key="refactoring.ChangeSignatureDialog" timestamp="1604910796647">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -192,9 +207,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/service_test.go</url>
-          <line>42</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/auth0/config.go</url>
+          <line>21</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
