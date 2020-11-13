@@ -34,6 +34,51 @@ func Test_Test(t *testing.T) {
 	}
 }
 
+func Test_CreateTableDifferentConnectionCache(t *testing.T) {
+	config := Config{
+		Type: "test",
+	}
+
+	{
+		db, err := config.Init()
+		if err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if err := db.Init(); err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if _, err := db.Conn().Exec(`CREATE TABLE test (id TEXT)`); err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if err := db.Close(); err != nil {
+			t.Errorf("no deberia fallar el cierre %v", err)
+		}
+
+	}
+
+	{
+		db, err := config.Init()
+		if err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if err := db.Init(); err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if _, err := db.Conn().Exec(`CREATE TABLE test (id TEXT)`); err != nil {
+			t.Errorf("no deberia fallar: %v", err)
+		}
+
+		if err := db.Close(); err != nil {
+			t.Errorf("no deberia fallar el cierre %v", err)
+		}
+	}
+}
+
 func Test_Sqlite3(t *testing.T) {
 	filename, err := ioutil.TempFile("", "temp_db")
 	if err != nil {

@@ -45,7 +45,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/dir" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../staff" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -132,7 +132,8 @@
     <MESSAGE value="ParamHelper no ok" />
     <MESSAGE value="Database configuration" />
     <MESSAGE value="Big refactor!!! Building blocks approach" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big refactor!!! Building blocks approach" />
+    <MESSAGE value="Checkeos de configuracion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Checkeos de configuracion" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -154,26 +155,26 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="748" height="485" key="DebuggerActiveHint/0.0.1920.1048@0.0.1920.1048" timestamp="1604920552345" />
-    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl" timestamp="1605004302467">
+    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl" timestamp="1605272314503">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1605004302467" />
-    <state width="1878" height="343" key="GridCell.Tab.0.bottom" timestamp="1605050977525">
+    <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1605272314503" />
+    <state width="1878" height="271" key="GridCell.Tab.0.bottom" timestamp="1605222623193">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977525" />
-    <state width="1878" height="343" key="GridCell.Tab.0.center" timestamp="1605050977524">
+    <state width="1878" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
+    <state width="1878" height="271" key="GridCell.Tab.0.center" timestamp="1605222623193">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
-    <state width="1878" height="343" key="GridCell.Tab.0.left" timestamp="1605050977524">
+    <state width="1878" height="271" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
+    <state width="1878" height="271" key="GridCell.Tab.0.left" timestamp="1605222623192">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
-    <state width="1878" height="343" key="GridCell.Tab.0.right" timestamp="1605050977524">
+    <state width="1878" height="271" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623192" />
+    <state width="1878" height="271" key="GridCell.Tab.0.right" timestamp="1605222623193">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="343" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605050977524" />
+    <state width="1878" height="271" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
     <state width="1878" height="343" key="GridCell.Tab.1.bottom" timestamp="1605050977526">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -194,10 +195,10 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="689" y="259" width="540" height="524" key="StructurePopup/0.0.1920.1048@0.0.1920.1048" timestamp="1604909547024" />
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605034599054">
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605212921829">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1605034599054" />
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1605212921829" />
     <state x="796" y="285" width="321" height="479" key="refactoring.ChangeSignatureDialog" timestamp="1604910796647">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
