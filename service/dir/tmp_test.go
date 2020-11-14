@@ -7,13 +7,7 @@ import (
 
 func Test_Tmp(t *testing.T) {
 	dir, err := NewTmp()
-
 	if err != nil {
-		t.Errorf("deberia crearse : %v", err)
-		return
-	}
-
-	if err != dir.Open() {
 		t.Errorf("%v", err)
 		return
 	}

@@ -4,7 +4,7 @@ type Tmp struct {
 	Sqlite
 }
 
-func NewTmp() *Tmp {
+func NewTmp() (*Tmp, error) {
 	d := new(Tmp)
 	d.Config = &Config{
 		Type:     "sqlite3",
@@ -12,5 +12,6 @@ func NewTmp() *Tmp {
 		Memory:   true,
 	}
 
-	return d
+	err := d.Open()
+	return d, err
 }

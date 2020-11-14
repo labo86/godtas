@@ -21,5 +21,6 @@ func NewTmp() (*Tmp, error) {
 		Folder: folder,
 	}
 
-	return d, nil
+	err = d.Open()
+	return d, err
 }

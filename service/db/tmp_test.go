@@ -5,14 +5,10 @@ import (
 )
 
 func Test_Tmp(t *testing.T) {
-	d := NewTmp()
-	if d == nil {
-		t.Error("deberia crearse")
+	d, err := NewTmp()
+	if err != nil {
+		t.Errorf("deberia crearse : %v", err)
 		return
-	}
-
-	if err := d.Open(); err != nil {
-		t.Errorf("deberia abrirse: %v", err)
 	}
 
 	var value int
