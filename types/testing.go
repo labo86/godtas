@@ -1,68 +1,60 @@
 package types
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/labo86/godtas/service/db"
+	_ "github.com/mattn/go-sqlite3"
 	"reflect"
 )
 
-type DBTypeTmp struct {
-	db.Sqlite
-}
+func OpenDBTmp(ddl string) (*sql.DB, error) {
 
-func OpenDBTmp() (*DBTypeTmp, error) {
-	o := new(DBTypeTmp)
-	o.Config = &db.Config{
-		Type:     "sqlite3",
-		Filename: "testing.db",
-		Memory:   true,
-	}
-
-	if err := o.Open(); err != nil {
+	d, err := sql.Open("sqlite3", "file:%s?cache=shared&mode=memory")
+	if err != nil {
 		return nil, fmt.Errorf("can't open tmp db: %v", err)
 	}
 
-	{
-		d := o.Conn()
-		if _, err := d.Exec(`CREATE TABLE types (id TEXT, value TEXT)`); err != nil {
-			_ = d.Close()
-			return nil, fmt.Errorf("can't create tmp table : %v", err)
-		}
+	if _, err := d.Exec(ddl); err != nil {
+		_ = d.Close()
+		return nil, fmt.Errorf("can't create tmp table : %v", err)
 	}
 
-	return o, nil
-
+	return d, nil
 }
 
-func (o *DBTypeTmp) Insert(id interface{}, value interface{}) error {
-	d := o.Conn()
-	if _, err := d.Exec(`INSERT INTO types (id, value) VALUES (?, ?)`, id, value); err != nil {
+func OpenDBTypeTmp() (*sql.DB, error) {
+	ddl := `CREATE TABLE types (id TEXT, value TEXT)`
+	return OpenDBTmp(ddl)
+}
+
+func Insert(o *sql.DB, id interface{}, value interface{}) error {
+	if _, err := o.Exec(`INSERT INTO types (id, value) VALUES (?, ?)`, id, value); err != nil {
 		return fmt.Errorf("can't insert type %q : %v", id, err)
 	}
 	return nil
 }
 
-func (o *DBTypeTmp) Select(id interface{}, value interface{}) error {
-	d := o.Conn()
-	if err := d.QueryRow(`SELECT value FROM types WHERE id = ?`, id).Scan(value); err != nil {
+func Select(o *sql.DB, id interface{}, value interface{}) error {
+
+	if err := o.QueryRow(`SELECT value FROM types WHERE id = ?`, id).Scan(value); err != nil {
 		return fmt.Errorf("can't retrieve type %q : %v", id, err)
 	}
 	return nil
 }
 
 func AssertInsertSelect(expected interface{}, actual interface{}) error {
-	d, err := OpenDBTmp()
+	d, err := OpenDBTypeTmp()
 	if err != nil {
 		return fmt.Errorf("can't open tmp db : %v", err)
 	}
 	defer d.Close()
 
-	if err := d.Insert("1", expected); err != nil {
+	if err := Insert(d, "1", expected); err != nil {
 		return err
 	}
 
-	if err := d.Select("1", actual); err != nil {
+	if err := Select(d, "1", actual); err != nil {
 		return err
 	}
 
