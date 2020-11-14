@@ -9,19 +9,19 @@ type Remote struct {
 	Base
 }
 
-func (d *Remote) Init() error {
+func (d *Remote) Open() error {
 
 	url := d.config.Url
 
 	resp, err := http.Get(url)
 
 	if err != nil {
-		return fmt.Errorf("can't download auth0 pem cert %q : %v", url, err)
+		return fmt.Errorf("can't download auth0 pem cert from %q : %v", url, err)
 	}
 
 	certs, err := ParseJsonKeys(resp.Body)
 	if err != nil {
-		return fmt.Errorf("error parsing cert content: %v", err)
+		return fmt.Errorf("error parsing cert content : %v", err)
 	}
 
 	d.certs = certs

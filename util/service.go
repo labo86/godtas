@@ -1,4 +1,4 @@
-package godtas
+package util
 
 import (
 	"encoding/json"

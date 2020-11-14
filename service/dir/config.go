@@ -1,12 +1,14 @@
 package dir
 
+import "fmt"
+
 type Config struct {
 	Type   string `yaml:"type"`
 	Folder string `yaml:"folder"`
 }
 
-func (c *Config) Init() (Interface, error) {
-	var i Interface
+func (c *Config) Open() (Dir, error) {
+	var i Dir
 	switch c.Type {
 	case "folder":
 		i = &Folder{
@@ -14,14 +16,10 @@ func (c *Config) Init() (Interface, error) {
 				config: c,
 			},
 		}
-	case "tmp":
-		i = &Tmp{
-			Base{
-				config: c,
-			},
-		}
+	default:
+		return nil, fmt.Errorf("wrong type %q", c.Type)
 	}
-	if err := i.Init(); err != nil {
+	if err := i.Open(); err != nil {
 		return nil, err
 	}
 	return i, nil

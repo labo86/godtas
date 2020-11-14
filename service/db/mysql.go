@@ -11,12 +11,12 @@ type MySql struct {
 	Base
 }
 
-func (d *MySql) Init() error {
+func (d *MySql) Open() error {
 	DNS := fmt.Sprintf("%s:%s@/%s", d.config.Username, d.config.Password, d.config.Database)
 
 	db, err := sql.Open("mysql", DNS)
 	if err != nil {
-		return err
+		return fmt.Errorf("can't open db : %v", err)
 	}
 
 	db.SetConnMaxLifetime(time.Minute * 3)

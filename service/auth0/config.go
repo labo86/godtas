@@ -15,8 +15,8 @@ type Config struct {
 	X5c      string `yaml:"x5c"`
 }
 
-func (c *Config) Init() (Interface, error) {
-	var i Interface
+func (c *Config) Open() (Auth0, error) {
+	var i Auth0
 	switch c.Type {
 	case "local":
 		i = &Local{
@@ -31,24 +31,24 @@ func (c *Config) Init() (Interface, error) {
 			},
 		}
 	default:
-		return nil, fmt.Errorf("invalid type %q", c.Type)
+		return nil, fmt.Errorf("wrong type %q", c.Type)
 	}
-	if err := i.Init(); err != nil {
-		return nil, fmt.Errorf("auth0.Interface.Init() : %v", err)
+	if err := i.Open(); err != nil {
+		return nil, err
 	}
 	return i, nil
 }
 
-func LoadConfig(filename string) (*Config, error) {
+func NewConfig(filename string) (*Config, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, fmt.Errorf("auth0.LoadConfig(%q) : ioutil.ReadFile(%q) : %v", filename, filename, err)
+		return nil, fmt.Errorf("auth0.NewConfig(%q) : ioutil.ReadFile(%q) : %v", filename, filename, err)
 	}
 
 	var config Config
 	err = yaml.Unmarshal(data, &config)
 	if err != nil {
-		return nil, fmt.Errorf("auth0.LoadConfig(%q) : yaml.Unmarshal() : %v", filename, err)
+		return nil, fmt.Errorf("auth0.NewConfig(%q) : yaml.Unmarshal() : %v", filename, err)
 	}
 
 	return &config, nil

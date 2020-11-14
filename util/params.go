@@ -1,26 +1,26 @@
-package godtas
+package util
 
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/labo86/godtas/auth0"
+	"github.com/labo86/godtas/service/auth0"
 	"mime/multipart"
 	"net/http"
 	"strconv"
 )
 
-type ParamHelper struct {
+type Params struct {
 	r     *http.Request
 	Error error
 }
 
-func StartParam(r *http.Request) *ParamHelper {
-	return &ParamHelper{
+func NewParams(r *http.Request) *Params {
+	return &Params{
 		r: r,
 	}
 }
 
-func (p *ParamHelper) Route(name string) string {
+func (p *Params) Route(name string) string {
 	if !p.Ok() {
 		return ""
 	}
@@ -34,7 +34,7 @@ func (p *ParamHelper) Route(name string) string {
 	return value
 }
 
-func (p *ParamHelper) User() string {
+func (p *Params) User() string {
 	if !p.Ok() {
 		return ""
 	}
@@ -47,7 +47,7 @@ func (p *ParamHelper) User() string {
 	return value
 }
 
-func (p *ParamHelper) FormValue(name string) string {
+func (p *Params) FormValue(name string) string {
 	if !p.Ok() {
 		return ""
 	}
@@ -55,7 +55,7 @@ func (p *ParamHelper) FormValue(name string) string {
 	return p.r.FormValue(name)
 }
 
-func (p *ParamHelper) FormInt(name string) int {
+func (p *Params) FormInt(name string) int {
 	if !p.Ok() {
 		return 0
 	}
@@ -67,7 +67,7 @@ func (p *ParamHelper) FormInt(name string) int {
 	return value
 }
 
-func (p *ParamHelper) FormFile(name string) (multipart.File, *multipart.FileHeader) {
+func (p *Params) FormFile(name string) (multipart.File, *multipart.FileHeader) {
 	if !p.Ok() {
 		return nil, nil
 	}
@@ -79,11 +79,11 @@ func (p *ParamHelper) FormFile(name string) (multipart.File, *multipart.FileHead
 	return value, headers
 }
 
-func (p *ParamHelper) Ok() bool {
+func (p *Params) Ok() bool {
 	return p.Error == nil
 }
 
-func (p *ParamHelper) IsWrong(w http.ResponseWriter) bool {
+func (p *Params) IsWrong(w http.ResponseWriter) bool {
 	if !p.Ok() {
 		http.Error(w, fmt.Sprintf("wrong params: %v", p.Error), http.StatusBadRequest)
 		return true

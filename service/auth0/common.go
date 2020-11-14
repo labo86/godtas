@@ -22,22 +22,22 @@ func RequestUser(r *http.Request) (string, error) {
 	user := r.Context().Value("user")
 
 	if user == nil {
-		return "", fmt.Errorf("auth0: no se encontró la authorization en user")
+		return "", fmt.Errorf("no se encontró la authorization en user")
 	}
 
 	token := user.(*jwt.Token)
 	if token == nil {
-		return "", fmt.Errorf("auth0: la variable no es un jwt : %+v", token)
+		return "", fmt.Errorf("la variable no es un jwt : %+v", token)
 	}
 
 	claims := token.Claims.(jwt.MapClaims)
 	if claims == nil {
-		return "", fmt.Errorf("auth0: el jwd no tiene claims : %+v", claims)
+		return "", fmt.Errorf("el jwd no tiene claims : %+v", claims)
 	}
 
 	sub := claims["sub"].(string)
 	if sub == "" {
-		return "", fmt.Errorf("auth0: claim no tiene variable valor sub o es vacio : %+v", claims)
+		return "", fmt.Errorf("claim no tiene variable valor sub o es vacio : %+v", claims)
 	}
 
 	return sub, nil

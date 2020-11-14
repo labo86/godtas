@@ -10,7 +10,7 @@ type Sqlite struct {
 	Base
 }
 
-func (d *Sqlite) Init() error {
+func (d *Sqlite) Open() error {
 	var DNS string
 	if d.config.Memory {
 		DNS = fmt.Sprintf("file:%s?cache=shared&mode=memory", d.config.Filename)
@@ -20,7 +20,7 @@ func (d *Sqlite) Init() error {
 
 	db, err := sql.Open("sqlite3", DNS)
 	if err != nil {
-		return err
+		return fmt.Errorf("can't open db : %v", err)
 	}
 
 	d.conn = db

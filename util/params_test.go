@@ -1,15 +1,13 @@
-package godtas
+package util
 
 import (
-	"github.com/labo86/godtas/auth0"
-	"github.com/labo86/godtas/auth0test"
+	"github.com/labo86/godtas/service/auth0"
 	"net/http/httptest"
 	"testing"
 )
 
-func TestParamHelper_Ok(t *testing.T) {
-	config := auth0.Config(auth0test.LoadConfig())
-	auth, err := config.Init()
+func TestParams_Ok(t *testing.T) {
+	auth, err := auth0.NewTmp()
 
 	if err != nil {
 		t.Errorf("el parseo debio ser exitoso :%v", err)
@@ -19,14 +17,14 @@ func TestParamHelper_Ok(t *testing.T) {
 
 	{
 		r := httptest.NewRequest("GET", "/", nil)
-		auth0test.SetToken(r)
+		auth0.SetTokenTest(r)
 		w := httptest.NewRecorder()
 
 		if err := middleware.CheckJWT(w, r); err != nil {
 			t.Errorf("fallo el jwt: %v", err)
 		}
 
-		p := StartParam(r)
+		p := NewParams(r)
 		user := p.User()
 
 		expectedUser := "test|1234567890"
@@ -46,7 +44,7 @@ func TestParamHelper_OK_NoOK(t *testing.T) {
 		r := httptest.NewRequest("GET", "/", nil)
 		w := httptest.NewRecorder()
 
-		p := StartParam(r)
+		p := NewParams(r)
 		user := p.User()
 
 		expectedUser := ""

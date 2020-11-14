@@ -8,7 +8,7 @@ type Folder struct {
 	Base
 }
 
-func (d *Folder) Init() error {
+func (d *Folder) Open() error {
 	folder := d.config.Folder
 
 	if err := os.MkdirAll(folder, os.ModePerm); err != nil {

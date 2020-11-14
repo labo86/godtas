@@ -18,23 +18,23 @@ type Config struct {
 	Memory bool `yaml:"memory"`
 }
 
-func LoadConfig(filename string) (*Config, error) {
+func NewConfig(filename string) (*Config, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, fmt.Errorf("error loading config file %q : %v", data, err)
+		return nil, fmt.Errorf("can't read file %q : %v", filename, err)
 	}
 
 	var config Config
 	err = yaml.Unmarshal(data, &config)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("can't unmarshall yaml %q : %v", filename, err)
 	}
 
 	return &config, nil
 }
 
-func (c *Config) Init() (Interface, error) {
-	var db Interface
+func (c *Config) Open() (DB, error) {
+	var db DB
 	switch c.Type {
 	case "sqlite3":
 		db = &Sqlite{
@@ -49,17 +49,9 @@ func (c *Config) Init() (Interface, error) {
 			},
 		}
 	default:
-		db = &Sqlite{
-			Base{
-				config: &Config{
-					Type:     "sqlite3",
-					Filename: "test.db",
-					Memory:   true,
-				},
-			},
-		}
+		return nil, fmt.Errorf("wrong type %q", c.Type)
 	}
-	if err := db.Init(); err != nil {
+	if err := db.Open(); err != nil {
 		return nil, err
 	}
 	return db, nil

@@ -41,7 +41,7 @@ func (d *Base) getPublicKey(token *jwt.Token) (*rsa.PublicKey, error) {
 	cert, ok := d.certs[kid]
 
 	if !ok {
-		return nil, fmt.Errorf("cert key not found %q", kid)
+		return nil, fmt.Errorf("cert key %q not found", kid)
 	}
 
 	return cert, nil

@@ -1,7 +1,7 @@
 package dir
 
-type Interface interface {
-	Init() error
+type Dir interface {
+	Open() error
 	Close() error
 	Filename(filename string) string
 }
