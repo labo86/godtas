@@ -49,7 +49,7 @@ func TestMail_MarshalingJSON(t *testing.T) {
 
 	expected := Mail("a@a.com")
 	actual := new(Mail)
-	if err := AssertMarshalingJSON(expected, actual); err != nil {
+	if err := AssertMarshalingJSON(&expected, actual); err != nil {
 		t.Error(err)
 		return
 	}
