@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestTimestamp_Database(t *testing.T) {
 
-	expected := NowTimestamp()
-	actual := &Timestamp{}
-	if err := AssertInsertSelect(expected, actual); err != nil {
+	expected := Timestamp{
+		time.Now().UTC().Truncate(time.Second),
+	}
+	actual := Timestamp{}
+	if err := AssertInsertSelect(&expected, &actual); err != nil {
 		t.Error(err)
 		return
 	}
@@ -18,8 +21,10 @@ func TestTimestamp_Database(t *testing.T) {
 
 func TestTimestamp_DatabaseDatetime(t *testing.T) {
 
-	expected := NowTimestamp()
-	actual := &Timestamp{}
+	expected := Timestamp{
+		time.Now().UTC().Truncate(time.Second),
+	}
+	actual := Timestamp{}
 
 	d, err := OpenDBTmp(`CREATE TABLE types (id TEXT, value DATETIME)`)
 	if err != nil {
@@ -29,11 +34,11 @@ func TestTimestamp_DatabaseDatetime(t *testing.T) {
 	defer d.Close()
 
 	err = func() error {
-		if err := Insert(d, "1", expected); err != nil {
+		if err := Insert(d, "1", &expected); err != nil {
 			return err
 		}
 
-		if err := Select(d, "1", actual); err != nil {
+		if err := Select(d, "1", &actual); err != nil {
 			return err
 		}
 
@@ -52,9 +57,11 @@ func TestTimestamp_DatabaseDatetime(t *testing.T) {
 
 func TestTimestamp_JSON(t *testing.T) {
 
-	expected := NowTimestamp()
-	actual := &Timestamp{}
-	if err := AssertMarshalingJSON(expected, actual); err != nil {
+	expected := Timestamp{
+		time.Now().UTC().Truncate(time.Second),
+	}
+	actual := Timestamp{}
+	if err := AssertMarshalingJSON(&expected, &actual); err != nil {
 		t.Error(err)
 		return
 	}
