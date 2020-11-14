@@ -46,7 +46,7 @@ func Test_Sqlite3(t *testing.T) {
 func Test_Test(t *testing.T) {
 	config := Config{
 		Type:     "sqlite3",
-		Filename: "test.db",
+		Filename: "testing.db",
 		Memory:   true,
 	}
 
@@ -76,7 +76,7 @@ func Test_Test(t *testing.T) {
 func Test_CreateTableDifferentConnectionCache(t *testing.T) {
 	config := Config{
 		Type:     "sqlite3",
-		Filename: "test.db",
+		Filename: "testing.db",
 		Memory:   true,
 	}
 
@@ -90,7 +90,7 @@ func Test_CreateTableDifferentConnectionCache(t *testing.T) {
 			t.Errorf("no deberia fallar: %v", err)
 		}
 
-		if _, err := db.Conn().Exec(`CREATE TABLE test (id TEXT)`); err != nil {
+		if _, err := db.Conn().Exec(`CREATE TABLE testing (id TEXT)`); err != nil {
 			t.Errorf("no deberia fallar: %v", err)
 		}
 
@@ -110,7 +110,7 @@ func Test_CreateTableDifferentConnectionCache(t *testing.T) {
 			t.Errorf("no deberia fallar: %v", err)
 		}
 
-		if _, err := db.Conn().Exec(`CREATE TABLE test (id TEXT)`); err != nil {
+		if _, err := db.Conn().Exec(`CREATE TABLE testing (id TEXT)`); err != nil {
 			t.Errorf("no deberia fallar: %v", err)
 		}
 

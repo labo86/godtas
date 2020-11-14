@@ -10,7 +10,7 @@ type Tmp struct {
 }
 
 func NewTmp() (*Tmp, error) {
-	folder, err := ioutil.TempDir("", "test")
+	folder, err := ioutil.TempDir("", "testing")
 	if err != nil {
 		return nil, fmt.Errorf("can't create temp dir %v", err)
 	}

@@ -12,7 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ef9cbcef-61d2-42ba-8694-6509f76a0745" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/base_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/base_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +132,8 @@
     <MESSAGE value="Database configuration" />
     <MESSAGE value="Big refactor!!! Building blocks approach" />
     <MESSAGE value="Checkeos de configuracion" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkeos de configuracion" />
+    <MESSAGE value="Nuevas cosas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nuevas cosas" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -159,22 +159,22 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="743" y="282" width="428" height="486" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1605272314503" />
-    <state width="1878" height="271" key="GridCell.Tab.0.bottom" timestamp="1605222623193">
+    <state width="1878" height="224" key="GridCell.Tab.0.bottom" timestamp="1605309757234">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
-    <state width="1878" height="271" key="GridCell.Tab.0.center" timestamp="1605222623193">
+    <state width="1878" height="224" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1605309757234" />
+    <state width="1878" height="224" key="GridCell.Tab.0.center" timestamp="1605309757234">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="271" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
-    <state width="1878" height="271" key="GridCell.Tab.0.left" timestamp="1605222623192">
+    <state width="1878" height="224" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1605309757234" />
+    <state width="1878" height="224" key="GridCell.Tab.0.left" timestamp="1605309757233">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="271" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623192" />
-    <state width="1878" height="271" key="GridCell.Tab.0.right" timestamp="1605222623193">
+    <state width="1878" height="224" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1605309757233" />
+    <state width="1878" height="224" key="GridCell.Tab.0.right" timestamp="1605309757234">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1878" height="271" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605222623193" />
+    <state width="1878" height="224" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1605309757234" />
     <state width="1878" height="343" key="GridCell.Tab.1.bottom" timestamp="1605050977526">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -195,10 +195,10 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="689" y="259" width="540" height="524" key="StructurePopup/0.0.1920.1048@0.0.1920.1048" timestamp="1604909547024" />
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605212921829">
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2" timestamp="1605278202619">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1605212921829" />
+    <state x="555" y="260" width="804" height="530" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1605278202619" />
     <state x="796" y="285" width="321" height="479" key="refactoring.ChangeSignatureDialog" timestamp="1604910796647">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>

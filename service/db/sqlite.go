@@ -12,10 +12,10 @@ type Sqlite struct {
 
 func (d *Sqlite) Open() error {
 	var DNS string
-	if d.config.Memory {
-		DNS = fmt.Sprintf("file:%s?cache=shared&mode=memory", d.config.Filename)
+	if d.Config.Memory {
+		DNS = fmt.Sprintf("file:%s?cache=shared&mode=memory", d.Config.Filename)
 	} else {
-		DNS = fmt.Sprintf("file:%s?cache=shared", d.config.Filename)
+		DNS = fmt.Sprintf("file:%s?cache=shared", d.Config.Filename)
 	}
 
 	db, err := sql.Open("sqlite3", DNS)

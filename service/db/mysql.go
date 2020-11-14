@@ -12,7 +12,7 @@ type MySql struct {
 }
 
 func (d *MySql) Open() error {
-	DNS := fmt.Sprintf("%s:%s@/%s", d.config.Username, d.config.Password, d.config.Database)
+	DNS := fmt.Sprintf("%s:%s@/%s", d.Config.Username, d.Config.Password, d.Config.Database)
 
 	db, err := sql.Open("mysql", DNS)
 	if err != nil {

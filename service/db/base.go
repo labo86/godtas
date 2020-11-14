@@ -3,7 +3,7 @@ package db
 import "database/sql"
 
 type Base struct {
-	config *Config
+	Config *Config
 	conn   *sql.DB
 }
 

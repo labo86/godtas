@@ -39,13 +39,13 @@ func (c *Config) Open() (DB, error) {
 	case "sqlite3":
 		db = &Sqlite{
 			Base{
-				config: c,
+				Config: c,
 			},
 		}
 	case "mysql":
 		db = &MySql{
 			Base{
-				config: c,
+				Config: c,
 			},
 		}
 	default:

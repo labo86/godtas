@@ -6,9 +6,9 @@ type Tmp struct {
 
 func NewTmp() *Tmp {
 	d := new(Tmp)
-	d.config = &Config{
+	d.Config = &Config{
 		Type:     "sqlite3",
-		Filename: "test.db",
+		Filename: "testing.db",
 		Memory:   true,
 	}
 
