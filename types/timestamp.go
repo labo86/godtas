@@ -12,13 +12,6 @@ type Timestamp struct {
 	time.Time
 }
 
-func NowTimestamp() *Timestamp {
-	t := &Timestamp{
-		time.Now().UTC().Truncate(time.Duration(time.Second)),
-	}
-	return t
-}
-
 func (o Timestamp) Value() (driver.Value, error) {
 
 	return o.Format(MysqlDateFormat), nil
