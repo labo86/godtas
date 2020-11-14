@@ -27,17 +27,19 @@ func (o Timestamp) Value() (driver.Value, error) {
 
 func (o *Timestamp) Scan(value interface{}) error {
 
-	concreteValue, ok := value.(string)
-	if !ok {
-		return fmt.Errorf("converted value is not a string : %+v", value)
-	}
+	switch value.(type) {
+	case string:
+		newTime, err := time.Parse(MysqlDateFormat, value.(string))
+		if err != nil {
+			return fmt.Errorf("%q is not a valid date: %v", value.(string), err)
+		}
 
-	newTime, err := time.Parse(MysqlDateFormat, concreteValue)
-	if err != nil {
-		return fmt.Errorf("%q is not a valid date: %v", concreteValue, err)
+		o.Time = newTime
+	case time.Time:
+		o.Time = value.(time.Time)
+	default:
+		return fmt.Errorf("not a valid date type : %v", value)
 	}
-
-	o.Time = newTime
 
 	return nil
 }
