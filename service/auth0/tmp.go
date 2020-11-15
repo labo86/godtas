@@ -9,12 +9,12 @@ type Tmp struct {
 	Local
 }
 
+const TokenTest = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNlcnRfa2V5In0.eyJzdWIiOiJ0ZXN0fDEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.NjeVg_iu6tI7ku2dfjzd1rg-taTrb2yZBjPwvZYspIKFdoA5EW63b30M2eYj9ydg1XOTh_ZstKThWK84XcjTihcw8hCecMVFmgjpH3gjBic3QHaS1u1TPKhNaT78Jf_qxMahriOFikxsojAYjuMR9-dMccYRMb_cMMZfa54Mu3kcQRwW842m3jBK0gLawoxo0FYUoXdYShjJOnlUTjdIIFCE-mqayxC4QMBwlBUmZfxjIDoPSYNfzKW5rANFFXn4wwKlWDkzDhrokKutWpw5ZkrHdsuxGRYFMdrv4AFNcNODLBmRRuDVSsdJqdYHQLT1k5x3h8-T3w8djulH1XZD_Q`
+
 func NewTmp() (Auth0, error) {
 	c := Config{
-		Type:     "local",
-		Issuer:   "https://labo86.us.auth0.com/",
-		Audience: "http://publicat.alpha.labo86.cl/api",
-		Kid:      "cert_key",
+		Type: "local",
+		Kid:  "cert_key",
 		X5c: `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv
 vkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHc
 aT92whREFpLv9cj5lTeJSibyr/Mrm/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIy
@@ -28,6 +28,6 @@ MwIDAQAB`,
 }
 
 func SetTokenTest(r *http.Request) {
-	token := `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNlcnRfa2V5In0.eyJzdWIiOiJ0ZXN0fDEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.NjeVg_iu6tI7ku2dfjzd1rg-taTrb2yZBjPwvZYspIKFdoA5EW63b30M2eYj9ydg1XOTh_ZstKThWK84XcjTihcw8hCecMVFmgjpH3gjBic3QHaS1u1TPKhNaT78Jf_qxMahriOFikxsojAYjuMR9-dMccYRMb_cMMZfa54Mu3kcQRwW842m3jBK0gLawoxo0FYUoXdYShjJOnlUTjdIIFCE-mqayxC4QMBwlBUmZfxjIDoPSYNfzKW5rANFFXn4wwKlWDkzDhrokKutWpw5ZkrHdsuxGRYFMdrv4AFNcNODLBmRRuDVSsdJqdYHQLT1k5x3h8-T3w8djulH1XZD_Q`
-	r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", TokenTest))
 }

@@ -7,12 +7,10 @@ import (
 )
 
 type Config struct {
-	Type     string `yaml:"type"`
-	Audience string `yaml:"audience"`
-	Issuer   string `yaml:"issuer"`
-	Url      string `yaml:"url"`
-	Kid      string `yaml:"kid"`
-	X5c      string `yaml:"x5c"`
+	Type string `yaml:"type"`
+	Url  string `yaml:"url"`
+	Kid  string `yaml:"kid"`
+	X5c  string `yaml:"x5c"`
 }
 
 func (c *Config) Open() (Auth0, error) {

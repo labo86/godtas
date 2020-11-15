@@ -1,7 +1,6 @@
 package auth0
 
 import (
-	"net/http/httptest"
 	"testing"
 )
 
@@ -12,26 +11,20 @@ func TestTmp(t *testing.T) {
 		t.Errorf("el parseo debio ser exitoso :%v", err)
 	}
 
-	middleware := auth.MiddleWare()
+	token, err := auth.CheckJWT(TokenTest)
+	if err != nil {
+		t.Errorf("fallo el jwt: %v", err)
+		return
+	}
 
-	{
-		r := httptest.NewRequest("GET", "/", nil)
-		SetTokenTest(r)
-		w := httptest.NewRecorder()
+	value, err := ClaimValue(token, "sub")
 
-		if err := middleware.CheckJWT(w, r); err != nil {
-			t.Errorf("fallo el jwt: %v", err)
-		}
+	if err != nil {
+		t.Errorf("no se obtuvo el user: %v", err)
+	}
 
-		user, err := RequestUser(r)
-		if err != nil {
-			t.Errorf("no se obtuvo el user: %v", err)
-		}
-
-		expectedUser := "test|1234567890"
-		if user != expectedUser {
-			t.Errorf("usuario incorrecto %q deberia ser %q", user, expectedUser)
-		}
+	if got, want := value, "test|1234567890"; got != want {
+		t.Errorf("usuario incorrecto %q deberia ser %q", got, want)
 	}
 
 }

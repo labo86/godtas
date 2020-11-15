@@ -1,17 +1,19 @@
 package util
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/labo86/godtas/service/auth0"
 	"mime/multipart"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type Params struct {
-	r     *http.Request
-	Error error
+	r      *http.Request
+	Errors []error
 }
 
 func NewParams(r *http.Request) *Params {
@@ -21,71 +23,78 @@ func NewParams(r *http.Request) *Params {
 }
 
 func (p *Params) Route(name string) string {
-	if !p.Ok() {
-		return ""
-	}
-
 	vars := mux.Vars(p.r)
 	value, ok := vars[name]
 	if !ok {
-		p.Error = fmt.Errorf("param %q not defined", name)
+		p.Errors = append(p.Errors, fmt.Errorf("route param %q not defined", name))
 		return ""
 	}
 	return value
 }
 
-func (p *Params) User() string {
-	if !p.Ok() {
+func (p *Params) AuthorizationToken() string {
+	authHeader := p.r.Header.Get("Authorization")
+
+	if authHeader == "" {
+		p.Errors = append(p.Errors, errors.New("empty authorization bearer"))
 		return ""
 	}
 
-	value, err := auth0.RequestUser(p.r)
-
-	if err != nil {
-		p.Error = err
+	authHeaderParts := strings.Fields(authHeader)
+	if len(authHeaderParts) != 2 || strings.ToLower(authHeaderParts[0]) != "bearer" {
+		p.Errors = append(p.Errors, fmt.Errorf("authorization header format must be Bearer {token} : %q", authHeader))
+		return ""
 	}
-	return value
+
+	token := authHeaderParts[1]
+
+	if token == "" {
+		p.Errors = append(p.Errors, fmt.Errorf("token is empty : %q", authHeader))
+	}
+
+	return token
 }
 
 func (p *Params) FormValue(name string) string {
-	if !p.Ok() {
-		return ""
-	}
-
 	return p.r.FormValue(name)
 }
 
 func (p *Params) FormInt(name string) int {
-	if !p.Ok() {
-		return 0
-	}
-
 	value, err := strconv.Atoi(p.r.FormValue(name))
 	if err != nil {
-		p.Error = err
+		p.Errors = append(p.Errors, fmt.Errorf("form value %q is not int : %v", name, err))
 	}
 	return value
 }
 
 func (p *Params) FormFile(name string) (multipart.File, *multipart.FileHeader) {
-	if !p.Ok() {
-		return nil, nil
-	}
-
 	value, headers, err := p.r.FormFile(name)
 	if err != nil {
-		p.Error = err
+		p.Errors = append(p.Errors, fmt.Errorf("can't obtain form file value %q: %v", name, err))
 	}
 	return value, headers
 }
 
 func (p *Params) Ok() bool {
-	return p.Error == nil
+	return len(p.Errors) == 0
+}
+
+func (p *Params) JSON(value interface{}) {
+	contentType := p.r.Header.Get("Content-type")
+	if want := "application/json"; !strings.HasPrefix(contentType, want) {
+		p.Errors = append(p.Errors, fmt.Errorf("content type not a json : actual %q", contentType))
+		return
+	}
+
+	if err := json.NewDecoder(p.r.Body).Decode(value); err != nil {
+		p.Errors = append(p.Errors, fmt.Errorf("can't decode body as json: %v", err))
+		return
+	}
 }
 
 func (p *Params) IsWrong(w http.ResponseWriter) bool {
 	if !p.Ok() {
-		http.Error(w, fmt.Sprintf("wrong params: %v", p.Error), http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("wrong params: %v", p.Errors), http.StatusBadRequest)
 		return true
 	}
 	return false

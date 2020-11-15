@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"io"
-	"net/http"
 )
 
 type JWK struct {
@@ -18,29 +17,24 @@ type JWKS struct {
 	Keys []JWK `json:"keys"`
 }
 
-func RequestUser(r *http.Request) (string, error) {
-	user := r.Context().Value("user")
-
-	if user == nil {
-		return "", fmt.Errorf("no se encontró la authorization en user")
-	}
-
-	token := user.(*jwt.Token)
-	if token == nil {
-		return "", fmt.Errorf("la variable no es un jwt : %+v", token)
-	}
-
+func ClaimValue(token *jwt.Token, name string) (string, error) {
 	claims := token.Claims.(jwt.MapClaims)
 	if claims == nil {
-		return "", fmt.Errorf("el jwd no tiene claims : %+v", claims)
+		return "", fmt.Errorf("el jwd no tiene claims : %v", token)
 	}
 
-	sub := claims["sub"].(string)
-	if sub == "" {
-		return "", fmt.Errorf("claim no tiene variable valor sub o es vacio : %+v", claims)
+	value, ok := claims[name]
+	if !ok {
+		return "", fmt.Errorf("claim %q does not exist", name)
 	}
 
-	return sub, nil
+	str, ok := value.(string)
+	if !ok {
+		return "", fmt.Errorf("claim %q is not a string", name)
+	}
+
+	return str, nil
+
 }
 
 /*

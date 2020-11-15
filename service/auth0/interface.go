@@ -1,9 +1,9 @@
 package auth0
 
-import jwtmiddleware "github.com/auth0/go-jwt-middleware"
+import "github.com/dgrijalva/jwt-go"
 
 type Auth0 interface {
 	Open() error
 	Close() error
-	MiddleWare() *jwtmiddleware.JWTMiddleware
+	CheckJWT(string) (*jwt.Token, error)
 }
