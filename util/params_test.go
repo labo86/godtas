@@ -148,3 +148,45 @@ func TestParamHelper_JSONInvalidContentType(t *testing.T) {
 
 	}
 }
+
+func TestParams_Auth0ClaimOk(t *testing.T) {
+
+	{
+		a, _ := auth0.NewTmp()
+
+		r := httptest.NewRequest("GET", "/", nil)
+		auth0.SetTokenTest(r)
+
+		p := NewParams(r)
+		sub := p.Auth0Claim(a, "sub")
+
+		if got, want := sub, "test|1234567890"; got != want {
+			t.Errorf("sub incorrecto %q deberia ser %q", got, want)
+			return
+		}
+
+		if !p.Ok() {
+			t.Errorf("should be ok: %v", p.Errors[0])
+			return
+		}
+
+		sub = p.Auth0Claim(a, "sub")
+
+		if got, want := sub, "test|1234567890"; got != want {
+			t.Errorf("sub incorrecto %q deberia ser %q", got, want)
+			return
+		}
+
+		if !p.Ok() {
+			t.Errorf("should be ok: %v", p.Errors[0])
+			return
+		}
+
+		sub = p.Auth0Claim(a, "not_existant")
+
+		if p.Ok() {
+			t.Errorf("deberia fallar")
+			return
+		}
+	}
+}

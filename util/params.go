@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
+	"github.com/labo86/godtas/service/auth0"
 	"mime/multipart"
 	"net/http"
 	"strconv"
@@ -14,11 +16,13 @@ import (
 type Params struct {
 	Req    *http.Request
 	Errors []error
+	Values map[string]interface{}
 }
 
 func NewParams(r *http.Request) *Params {
 	return &Params{
-		Req: r,
+		Req:    r,
+		Values: make(map[string]interface{}),
 	}
 }
 
@@ -90,6 +94,39 @@ func (p *Params) JSON(value interface{}) {
 		p.Errors = append(p.Errors, fmt.Errorf("can't decode body as json: %v", err))
 		return
 	}
+}
+
+func (p *Params) Auth0AuthorizationToken(a auth0.Auth0) *jwt.Token {
+	value, ok := p.Values["auth0_authorization_token"].(*jwt.Token)
+	if ok {
+		return value
+	}
+
+	token := p.AuthorizationToken()
+
+	parsedToken, err := a.CheckJWT(token)
+	if err != nil {
+		p.Errors = append(p.Errors, fmt.Errorf("authorization token error : %v", err))
+		return nil
+	}
+
+	p.Values["auth0_authorization_token"] = parsedToken
+	return parsedToken
+
+}
+
+func (p *Params) Auth0Claim(a auth0.Auth0, name string) string {
+
+	token := p.Auth0AuthorizationToken(a)
+
+	value, err := auth0.ClaimValue(token, name)
+	if err != nil {
+		p.Errors = append(p.Errors, fmt.Errorf("claim %q : %v", name, err))
+		return ""
+	}
+
+	return value
+
 }
 
 func (p *Params) IsWrong(w http.ResponseWriter) bool {
