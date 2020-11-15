@@ -12,18 +12,18 @@ import (
 )
 
 type Params struct {
-	r      *http.Request
+	Req    *http.Request
 	Errors []error
 }
 
 func NewParams(r *http.Request) *Params {
 	return &Params{
-		r: r,
+		Req: r,
 	}
 }
 
 func (p *Params) Route(name string) string {
-	vars := mux.Vars(p.r)
+	vars := mux.Vars(p.Req)
 	value, ok := vars[name]
 	if !ok {
 		p.Errors = append(p.Errors, fmt.Errorf("route param %q not defined", name))
@@ -33,7 +33,7 @@ func (p *Params) Route(name string) string {
 }
 
 func (p *Params) AuthorizationToken() string {
-	authHeader := p.r.Header.Get("Authorization")
+	authHeader := p.Req.Header.Get("Authorization")
 
 	if authHeader == "" {
 		p.Errors = append(p.Errors, errors.New("empty authorization bearer"))
@@ -56,11 +56,11 @@ func (p *Params) AuthorizationToken() string {
 }
 
 func (p *Params) FormValue(name string) string {
-	return p.r.FormValue(name)
+	return p.Req.FormValue(name)
 }
 
 func (p *Params) FormInt(name string) int {
-	value, err := strconv.Atoi(p.r.FormValue(name))
+	value, err := strconv.Atoi(p.Req.FormValue(name))
 	if err != nil {
 		p.Errors = append(p.Errors, fmt.Errorf("form value %q is not int : %v", name, err))
 	}
@@ -68,7 +68,7 @@ func (p *Params) FormInt(name string) int {
 }
 
 func (p *Params) FormFile(name string) (multipart.File, *multipart.FileHeader) {
-	value, headers, err := p.r.FormFile(name)
+	value, headers, err := p.Req.FormFile(name)
 	if err != nil {
 		p.Errors = append(p.Errors, fmt.Errorf("can't obtain form file value %q: %v", name, err))
 	}
@@ -80,13 +80,13 @@ func (p *Params) Ok() bool {
 }
 
 func (p *Params) JSON(value interface{}) {
-	contentType := p.r.Header.Get("Content-type")
+	contentType := p.Req.Header.Get("Content-type")
 	if want := "application/json"; !strings.HasPrefix(contentType, want) {
 		p.Errors = append(p.Errors, fmt.Errorf("content type not a json : actual %q", contentType))
 		return
 	}
 
-	if err := json.NewDecoder(p.r.Body).Decode(value); err != nil {
+	if err := json.NewDecoder(p.Req.Body).Decode(value); err != nil {
 		p.Errors = append(p.Errors, fmt.Errorf("can't decode body as json: %v", err))
 		return
 	}
