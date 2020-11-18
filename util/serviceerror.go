@@ -35,7 +35,17 @@ func (e *ServiceError) UserError() string {
 	return fmt.Sprintf("%s:%s", e.Id, e.Message)
 }
 
-func LogError(w http.ResponseWriter, err error) {
+/*
+	Maneja el Error.
+
+	Si el error es nil entonces no hace nada y devuelve falso
+	Si el error es un ServiceError entonces usa el codigo que tiene
+	Si el error no es un Service Error lo considera como un SERVER_ERROR con un status de InternalServerError
+*/
+func LogError(w http.ResponseWriter, err error) bool {
+	if err == nil {
+		return false
+	}
 	sErr, ok := err.(*ServiceError)
 	if !ok {
 		sErr = NewServiceError("SERVER_ERROR", http.StatusInternalServerError, err)
@@ -43,4 +53,5 @@ func LogError(w http.ResponseWriter, err error) {
 
 	log.Println(sErr)
 	http.Error(w, sErr.UserError(), sErr.Code)
+	return true
 }

@@ -23,7 +23,11 @@ func TestLogError(t *testing.T) {
 	w := httptest.NewRecorder()
 
 	errorStr := "SOME ERROR"
-	LogError(w, errors.New(errorStr))
+	ok := LogError(w, errors.New(errorStr))
+	if !ok {
+		t.Errorf("log error debe ser exitoso")
+		return
+	}
 
 	content, err := ioutil.ReadAll(w.Body)
 	if err != nil {
@@ -53,7 +57,11 @@ func TestLogServiceError(t *testing.T) {
 
 	errorStr := "SOME ERROR"
 	extErrorStr := "EXT_ERROR"
-	LogError(w, NewServiceError(extErrorStr, http.StatusBadRequest, errors.New(errorStr)))
+	ok := LogError(w, NewServiceError(extErrorStr, http.StatusBadRequest, errors.New(errorStr)))
+	if !ok {
+		t.Errorf("log error debe ser exitoso")
+		return
+	}
 
 	content, err := ioutil.ReadAll(w.Body)
 	if err != nil {
@@ -68,6 +76,18 @@ func TestLogServiceError(t *testing.T) {
 
 	if got, want := buf.String(), fmt.Sprintf("%s]%s\n", response, errorStr); !strings.HasSuffix(got, want) {
 		t.Errorf("response got %q, want %q", got, want)
+	}
+
+}
+
+func TestLogErrorNil(t *testing.T) {
+
+	w := httptest.NewRecorder()
+
+	ok := LogError(w, nil)
+	if ok {
+		t.Errorf("log error debe retornar falso porque el error es nulo")
+		return
 	}
 
 }
