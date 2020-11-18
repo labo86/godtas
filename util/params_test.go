@@ -21,8 +21,8 @@ func TestParams_Ok(t *testing.T) {
 			return
 		}
 
-		if !p.Ok() {
-			t.Errorf("should be ok: %v", p.Errors[0])
+		if err := p.Error(); err != nil {
+			t.Errorf("should be ok: %v", err)
 			return
 		}
 
@@ -41,7 +41,7 @@ func TestParamHelper_OK_NoOK(t *testing.T) {
 			return
 		}
 
-		if p.Ok() {
+		if err := p.Error(); err == nil {
 			t.Errorf("debe estar malo")
 			return
 		}
@@ -60,8 +60,8 @@ func TestParamHelper_JSON(t *testing.T) {
 		p := NewParams(r)
 		p.JSON(&value)
 
-		if !p.Ok() {
-			t.Errorf("debe ser un json valido : %v", p.Errors[0])
+		if err := p.Error(); err != nil {
+			t.Errorf("debe ser un json valido : %v", p.Error())
 			return
 		}
 
@@ -91,8 +91,8 @@ func TestParamHelper_JSON2(t *testing.T) {
 		p := NewParams(r)
 		p.JSON(&value)
 
-		if !p.Ok() {
-			t.Errorf("debe ser un json valido : %v", p.Errors[0])
+		if err := p.Error(); err != nil {
+			t.Errorf("debe ser un json valido : %v", p.Error())
 			return
 		}
 
@@ -122,8 +122,8 @@ func TestParamHelper_JSONInvalidFormat(t *testing.T) {
 		p := NewParams(r)
 		p.JSON(&value)
 
-		if p.Ok() {
-			t.Errorf("no debe ser un json valido : %v", p.Errors[0])
+		if err := p.Error(); err == nil {
+			t.Errorf("no debe ser un json valido")
 			return
 		}
 
@@ -141,8 +141,8 @@ func TestParamHelper_JSONInvalidContentType(t *testing.T) {
 		p := NewParams(r)
 		p.JSON(&value)
 
-		if p.Ok() {
-			t.Errorf("no debe ser un json valido : %v", p.Errors[0])
+		if err := p.Error(); err == nil {
+			t.Errorf("no debe ser un json valido")
 			return
 		}
 
@@ -165,8 +165,8 @@ func TestParams_Auth0ClaimOk(t *testing.T) {
 			return
 		}
 
-		if !p.Ok() {
-			t.Errorf("should be ok: %v", p.Errors[0])
+		if err := p.Error(); err != nil {
+			t.Errorf("should be ok: %v", err)
 			return
 		}
 
@@ -177,14 +177,14 @@ func TestParams_Auth0ClaimOk(t *testing.T) {
 			return
 		}
 
-		if !p.Ok() {
-			t.Errorf("should be ok: %v", p.Errors[0])
+		if err := p.Error(); err != nil {
+			t.Errorf("should be ok: %v", err)
 			return
 		}
 
 		sub = p.Auth0Claim(a, "not_existant")
 
-		if p.Ok() {
+		if err := p.Error(); err == nil {
 			t.Errorf("deberia fallar")
 			return
 		}

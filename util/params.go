@@ -15,7 +15,7 @@ import (
 
 type Params struct {
 	Req    *http.Request
-	Errors []error
+	Errors ErrorList
 	Values map[string]interface{}
 }
 
@@ -30,7 +30,7 @@ func (p *Params) Route(name string) string {
 	vars := mux.Vars(p.Req)
 	value, ok := vars[name]
 	if !ok {
-		p.Errors = append(p.Errors, fmt.Errorf("route param %q not defined", name))
+		p.Errors.append(fmt.Errorf("route param %q not defined", name))
 		return ""
 	}
 	return value
@@ -40,20 +40,20 @@ func (p *Params) AuthorizationToken() string {
 	authHeader := p.Req.Header.Get("Authorization")
 
 	if authHeader == "" {
-		p.Errors = append(p.Errors, errors.New("empty authorization bearer"))
+		p.Errors.append(errors.New("empty authorization bearer"))
 		return ""
 	}
 
 	authHeaderParts := strings.Fields(authHeader)
 	if len(authHeaderParts) != 2 || strings.ToLower(authHeaderParts[0]) != "bearer" {
-		p.Errors = append(p.Errors, fmt.Errorf("authorization header format must be Bearer {token} : %q", authHeader))
+		p.Errors.append(fmt.Errorf("authorization header format must be Bearer {token} : %q", authHeader))
 		return ""
 	}
 
 	token := authHeaderParts[1]
 
 	if token == "" {
-		p.Errors = append(p.Errors, fmt.Errorf("token is empty : %q", authHeader))
+		p.Errors.append(fmt.Errorf("token is empty : %q", authHeader))
 	}
 
 	return token
@@ -66,7 +66,7 @@ func (p *Params) FormValue(name string) string {
 func (p *Params) FormInt(name string) int {
 	value, err := strconv.Atoi(p.Req.FormValue(name))
 	if err != nil {
-		p.Errors = append(p.Errors, fmt.Errorf("form value %q is not int : %v", name, err))
+		p.Errors.append(fmt.Errorf("form value %q is not int : %v", name, err))
 	}
 	return value
 }
@@ -74,24 +74,28 @@ func (p *Params) FormInt(name string) int {
 func (p *Params) FormFile(name string) (multipart.File, *multipart.FileHeader) {
 	value, headers, err := p.Req.FormFile(name)
 	if err != nil {
-		p.Errors = append(p.Errors, fmt.Errorf("can't obtain form file value %q: %v", name, err))
+		p.Errors.append(fmt.Errorf("can't obtain form file value %q: %v", name, err))
 	}
 	return value, headers
 }
 
-func (p *Params) Ok() bool {
-	return len(p.Errors) == 0
+func (p *Params) Error() error {
+	return p.Errors.FirstError()
+}
+
+func (p *Params) ServiceError() error {
+	return NewServiceError("", http.StatusBadRequest, p.Errors.FirstError())
 }
 
 func (p *Params) JSON(value interface{}) {
 	contentType := p.Req.Header.Get("Content-type")
 	if want := "application/json"; !strings.HasPrefix(contentType, want) {
-		p.Errors = append(p.Errors, fmt.Errorf("content type not a json : actual %q", contentType))
+		p.Errors.append(fmt.Errorf("content type not a json : actual %q", contentType))
 		return
 	}
 
 	if err := json.NewDecoder(p.Req.Body).Decode(value); err != nil {
-		p.Errors = append(p.Errors, fmt.Errorf("can't decode body as json: %v", err))
+		p.Errors.append(fmt.Errorf("can't decode body as json: %v", err))
 		return
 	}
 }
@@ -106,7 +110,7 @@ func (p *Params) Auth0AuthorizationToken(a auth0.Auth0) *jwt.Token {
 
 	parsedToken, err := a.CheckJWT(token)
 	if err != nil {
-		p.Errors = append(p.Errors, fmt.Errorf("authorization token error : %v", err))
+		p.Errors.append(fmt.Errorf("authorization token error : %v", err))
 		return nil
 	}
 
@@ -121,18 +125,9 @@ func (p *Params) Auth0Claim(a auth0.Auth0, name string) string {
 
 	value, err := auth0.ClaimValue(token, name)
 	if err != nil {
-		p.Errors = append(p.Errors, fmt.Errorf("claim %q : %v", name, err))
+		p.Errors.append(fmt.Errorf("claim %q : %v", name, err))
 		return ""
 	}
 
 	return value
-
-}
-
-func (p *Params) IsWrong(w http.ResponseWriter) bool {
-	if !p.Ok() {
-		http.Error(w, fmt.Sprintf("wrong params: %v", p.Errors), http.StatusBadRequest)
-		return true
-	}
-	return false
 }
