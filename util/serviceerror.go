@@ -11,13 +11,19 @@ type ServiceError struct {
 	Id      string
 	Message string
 	Sub     error
+	Code    int
 }
 
-func NewServiceError(message string, sub error) *ServiceError {
+type NotFoundError struct {
+	error
+}
+
+func NewServiceError(message string, code int, sub error) *ServiceError {
 	return &ServiceError{
 		Id:      uuid.New().String(),
 		Message: message,
 		Sub:     sub,
+		Code:    code,
 	}
 }
 
@@ -32,9 +38,9 @@ func (e *ServiceError) UserError() string {
 func LogError(w http.ResponseWriter, err error) {
 	sErr, ok := err.(*ServiceError)
 	if !ok {
-		sErr = NewServiceError("SERVER_ERROR", err)
+		sErr = NewServiceError("SERVER_ERROR", http.StatusInternalServerError, err)
 	}
 
 	log.Println(sErr)
-	http.Error(w, sErr.UserError(), http.StatusInternalServerError)
+	http.Error(w, sErr.UserError(), sErr.Code)
 }

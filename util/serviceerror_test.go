@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
@@ -52,7 +53,7 @@ func TestLogServiceError(t *testing.T) {
 
 	errorStr := "SOME ERROR"
 	extErrorStr := "EXT_ERROR"
-	LogError(w, NewServiceError(extErrorStr, errors.New(errorStr)))
+	LogError(w, NewServiceError(extErrorStr, http.StatusBadRequest, errors.New(errorStr)))
 
 	content, err := ioutil.ReadAll(w.Body)
 	if err != nil {
