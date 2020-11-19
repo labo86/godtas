@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"os"
+	"path"
 )
 
 type Sqlite struct {
@@ -16,6 +18,13 @@ func (d *Sqlite) Open() error {
 		DNS = fmt.Sprintf("file:%s?cache=shared&mode=memory", d.Config.Filename)
 	} else {
 		DNS = fmt.Sprintf("file:%s?cache=shared", d.Config.Filename)
+	}
+
+	dir := path.Dir(d.Config.Filename)
+
+	err := os.MkdirAll(dir, 0644)
+	if err != nil {
+		return fmt.Errorf("can't create database %q dir : %v", d.Config.Filename, err)
 	}
 
 	db, err := sql.Open("sqlite3", DNS)

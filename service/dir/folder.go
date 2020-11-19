@@ -11,7 +11,7 @@ type Folder struct {
 func (d *Folder) Open() error {
 	folder := d.config.Folder
 
-	if err := os.MkdirAll(folder, os.ModePerm); err != nil {
+	if err := os.MkdirAll(folder, 0644); err != nil {
 		return err
 	}
 	d.basePath = folder
