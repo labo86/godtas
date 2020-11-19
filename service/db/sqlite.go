@@ -22,7 +22,7 @@ func (d *Sqlite) Open() error {
 
 	dir := path.Dir(d.Config.Filename)
 
-	err := os.MkdirAll(dir, 0644)
+	err := os.MkdirAll(dir, 0744)
 	if err != nil {
 		return fmt.Errorf("can't create database %q dir : %v", d.Config.Filename, err)
 	}
