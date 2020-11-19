@@ -84,7 +84,10 @@ func (p *Params) Error() error {
 }
 
 func (p *Params) ServiceError() error {
-	return NewServiceError("", http.StatusBadRequest, p.Errors.FirstError())
+	if err := p.Errors.FirstError(); err != nil {
+		return NewServiceError("", http.StatusBadRequest, p.Errors.FirstError())
+	}
+	return nil
 }
 
 func (p *Params) JSON(value interface{}) {

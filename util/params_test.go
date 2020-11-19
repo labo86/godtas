@@ -190,3 +190,25 @@ func TestParams_Auth0ClaimOk(t *testing.T) {
 		}
 	}
 }
+
+func TestParams_OkServiceError(t *testing.T) {
+
+	{
+		r := httptest.NewRequest("GET", "/", nil)
+		auth0.SetTokenTest(r)
+
+		p := NewParams(r)
+		token := p.AuthorizationToken()
+
+		if got, want := token, auth0.TokenTest; got != want {
+			t.Errorf("token incorrecto %q deberia ser %q", got, want)
+			return
+		}
+
+		if err := p.ServiceError(); err != nil {
+			t.Errorf("should be ok: %v", err)
+			return
+		}
+
+	}
+}
