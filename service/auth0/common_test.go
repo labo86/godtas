@@ -34,3 +34,13 @@ func Test_ParseJsonKeys(t *testing.T) {
 		}
 	}
 }
+
+func TestClaimValue(t *testing.T) {
+
+	_, err := ClaimValue(nil, "some")
+	if err == nil {
+		t.Errorf("deberia fallar por claim")
+		return
+	}
+
+}

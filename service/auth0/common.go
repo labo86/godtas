@@ -18,6 +18,10 @@ type JWKS struct {
 }
 
 func ClaimValue(token *jwt.Token, name string) (string, error) {
+	if token == nil {
+		return "", fmt.Errorf("token is nil")
+	}
+
 	claims := token.Claims.(jwt.MapClaims)
 	if claims == nil {
 		return "", fmt.Errorf("el jwd no tiene claims : %v", token)
