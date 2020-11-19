@@ -4,7 +4,7 @@ type ErrorList struct {
 	list []error
 }
 
-func (o *ErrorList) append(e error) {
+func (o *ErrorList) Append(e error) {
 	o.list = append(o.list, e)
 }
 
