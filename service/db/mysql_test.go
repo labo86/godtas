@@ -55,7 +55,7 @@ func Test_MySqlDate(t *testing.T) {
 	}
 
 	{
-		query := `CREATE TABLE test (id INTEGER, date DATETIME DEFAULT now())`
+		query := `CREATE TEMPORARY TABLE test (id INTEGER, date DATETIME DEFAULT now())`
 
 		if _, err := db.Conn().Exec(query); err != nil {
 			t.Errorf("%+v: query : %q  got %v", db, query, err)
