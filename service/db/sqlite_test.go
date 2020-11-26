@@ -60,7 +60,7 @@ func Test_Test(t *testing.T) {
 	}
 
 	var value int
-	if err != db.Conn().QueryRow(`SELECT 123 as a`).Scan(&value) {
+	if err := db.Conn().QueryRow(`SELECT 123 as a`).Scan(&value); err != nil {
 		t.Errorf("no deberia fallar: %v", err)
 	}
 
