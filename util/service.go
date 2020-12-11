@@ -6,7 +6,8 @@ import (
 )
 
 /**
-Escribe un valor en el writer como un json
+Escribe un valor en el writer como un json.
+Recuerda que en caso de slices inicializarlos con make(slice, 0) para que sean  serializados como [] en vez de null.
 */
 func EncodeAsJson(w http.ResponseWriter, value interface{}) {
 	if err := json.NewEncoder(w).Encode(value); err != nil {
